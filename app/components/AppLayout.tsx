@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, Outlet } from 'react-router';
 import {
   AppBar,
   Box,
@@ -28,6 +29,7 @@ const App: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -61,8 +63,7 @@ const App: React.FC = () => {
           <ListItem key={item.text} disablePadding>
             <ListItemButton
               onClick={() => {
-                // TODO: Students should implement React Router navigation
-                // Example: navigate(item.path);
+                navigate(item.path);
                 if (isMobile) {
                   setMobileOpen(false);
                 }
@@ -150,15 +151,7 @@ const App: React.FC = () => {
       >
         <Toolbar /> {/* Spacer for fixed AppBar */}
         
-        
-        <Box sx={{ textAlign: 'center', mt: 8 }}>
-          <Typography variant="h4" gutterBottom>
-            Welcome to Task Manager
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Implement React Router to navigate between pages
-          </Typography>
-        </Box>
+        <Outlet />
       </Box>
     </Box>
   );

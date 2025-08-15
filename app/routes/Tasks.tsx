@@ -26,24 +26,38 @@ import {
   Delete,
   FilterList,
 } from '@mui/icons-material';
+import { useTaskStore } from '../store/taskStore';
+import { useForm } from 'react-hook-form';
+
+interface FormData {
+  title: string;
+  description: string;
+  priority: 'low' | 'medium' | 'high';
+}
 
 const Tasks: React.FC = () => {
-  // TODO: Students should manage these with Zustand and React Hook Form
   const [openDialog, setOpenDialog] = React.useState(false);
   const [filter, setFilter] = React.useState('all');
+  const { tasks, toggleTask, deleteTask, addTask } = useTaskStore();
+  
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
-  // TODO: Students should replace with Zustand store data
-  const mockTasks = [
-    { id: 1, title: 'Sample Task', description: 'Task description', priority: 'medium', completed: false, createdAt: new Date() }
-  ];
-
-  // TODO: Students should implement filtering logic
-  const filteredTasks = mockTasks.filter((task: any) => {
+  // Implement filtering logic
+  const filteredTasks = tasks.filter((task) => {
     if (filter === 'completed') return task.completed;
     if (filter === 'pending') return !task.completed;
     if (filter === 'high') return task.priority === 'high';
     return true; // 'all'
   });
+
+  const onSubmit = (data: FormData) => {
+    addTask({
+      ...data,
+      completed: false
+    });
+    reset();
+    setOpenDialog(false);
+  };
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -96,17 +110,14 @@ const Tasks: React.FC = () => {
         </Paper>
       ) : (
         <Box>
-          {filteredTasks.map((task: any, index: number) => (
-            <Card key={index} sx={{ mb: 2 }}>
+          {filteredTasks.map((task) => (
+            <Card key={task.id} sx={{ mb: 2 }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   {/* Checkbox */}
                   <Checkbox
                     checked={task.completed}
-                    onChange={() => {
-                      // TODO: Students should implement toggle completion
-                      // Example: toggleTask(task.id)
-                    }}
+                    onChange={() => toggleTask(task.id)}
                   />
 
                   {/* Task Content */}
@@ -142,10 +153,7 @@ const Tasks: React.FC = () => {
                   {/* Delete Button */}
                   <IconButton
                     color="error"
-                    onClick={() => {
-                      // TODO: Students should implement delete task
-                      // Example: deleteTask(task.id)
-                    }}
+                    onClick={() => deleteTask(task.id)}
                   >
                     <Delete />
                   </IconButton>
@@ -161,37 +169,49 @@ const Tasks: React.FC = () => {
         <DialogTitle>Add New Task</DialogTitle>
 
         <DialogContent>
-          {/* TODO: Students should implement React Hook Form here */}
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid size={12}>
-              <TextField
-                fullWidth
-                label="Task Title"
-                variant="outlined"
-                required
-              // TODO: Add form validation and state management
-              />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={2} sx={{ mt: 1 }}>
+              <Grid size={12}>
+                <TextField
+                  fullWidth
+                  label="Task Title"
+                  variant="outlined"
+                  error={!!errors.title}
+                  helperText={errors.title?.message}
+                  {...register('title', { required: 'กรุณากรอกชื่อ task' })}
+                />
+              </Grid>
+              <Grid size={12}>
+                <TextField
+                  fullWidth
+                  label="Description"
+                  variant="outlined"
+                  multiline
+                  rows={3}
+                  {...register('description')}
+                />
+              </Grid>
+              <Grid size={12}>
+                <FormControl fullWidth error={!!errors.priority}>
+                  <InputLabel>Priority</InputLabel>
+                  <Select 
+                    label="Priority" 
+                    defaultValue="medium"
+                    {...register('priority', { required: 'กรุณาเลือก priority' })}
+                  >
+                    <MenuItem value="low">Low</MenuItem>
+                    <MenuItem value="medium">Medium</MenuItem>
+                    <MenuItem value="high">High</MenuItem>
+                  </Select>
+                  {errors.priority && (
+                    <Typography variant="caption" color="error" sx={{ mt: 1 }}>
+                      {errors.priority.message}
+                    </Typography>
+                  )}
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid size={12}>
-              <TextField
-                fullWidth
-                label="Description"
-                variant="outlined"
-                multiline
-                rows={3}
-              />
-            </Grid>
-            <Grid size={12}>
-              <FormControl fullWidth>
-                <InputLabel>Priority</InputLabel>
-                <Select label="Priority" defaultValue="medium">
-                  <MenuItem value="low">Low</MenuItem>
-                  <MenuItem value="medium">Medium</MenuItem>
-                  <MenuItem value="high">High</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+          </form>
         </DialogContent>
 
         <DialogActions>
@@ -200,11 +220,7 @@ const Tasks: React.FC = () => {
           </Button>
           <Button
             variant="contained"
-            onClick={() => {
-              // TODO: Students should implement form submission with validation
-              // Example: handleSubmit(formData)
-              setOpenDialog(false);
-            }}
+            onClick={handleSubmit(onSubmit)}
           >
             Add Task
           </Button>

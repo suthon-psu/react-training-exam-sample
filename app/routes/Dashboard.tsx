@@ -17,20 +17,19 @@ import {
     Schedule,
     TrendingUp,
 } from '@mui/icons-material';
+import { useTaskStore } from '../store/taskStore';
 
 const Dashboard: React.FC = () => {
-    // TODO: Students should get data from Zustand store
-    // Example: const { tasks } = useTaskStore();
+    const { tasks } = useTaskStore();
 
-    const mockTasks: any[] = [
-        // Students will replace this with real data from store
-    ];
-
-    // TODO: Students should calculate these from real tasks
-    const totalTasks = mockTasks.length;
-    const completedTasks = mockTasks.filter((task: any) => task.completed).length;
+    // Calculate statistics
+    const totalTasks = tasks.length;
+    const completedTasks = tasks.filter((task) => task.completed).length;
     const pendingTasks = totalTasks - completedTasks;
     const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+    
+    // Get recent tasks (5 latest)
+    const recentTasks = tasks.slice(0, 5);
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -103,16 +102,15 @@ const Dashboard: React.FC = () => {
                     Recent Tasks
                 </Typography>
 
-                {mockTasks.length === 0 ? (
+                {recentTasks.length === 0 ? (
                     <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
                         No tasks yet. Create your first task!
                     </Typography>
                 ) : (
                     <List>
-                        {/* TODO: Students should map over recent tasks */}
-                        {mockTasks.slice(0, 5).map((task: any, index: number) => (
+                        {recentTasks.map((task) => (
                             <ListItem
-                                key={index}
+                                key={task.id}
                                 sx={{
                                     border: '1px solid',
                                     borderColor: 'divider',

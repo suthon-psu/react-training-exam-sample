@@ -7,7 +7,7 @@
 
 สร้างแอพพลิเคชัน Task Management Dashboard โดยใช้ React, MUI, React Router, Zustand และ React Hook Form
 
-เราได้เตรียมไฟล์ layout และ CSS ให้แล้วในโฟลเดอร์ `/src/components/`:
+เราได้เตรียมไฟล์ layout และ CSS ให้แล้วในโฟลเดอร์ `/app/components/`:
 - `App.tsx` - Layout หลักพร้อม Navigation
 - `Dashboard.tsx` - หน้า Dashboard 
 - `Tasks.tsx` - หน้า Tasks
@@ -45,7 +45,7 @@ app/
 
 ### 2.1 สร้าง Task Interface (15 คะแนน)
 
-สร้างไฟล์ `src/types/Task.ts`:
+สร้างไฟล์ `app/types/Task.ts`:
 
 ```typescript
 export interface Task {
@@ -64,7 +64,7 @@ export interface Task {
 
 ### 3.1 สร้าง Task Store (25 คะแนน)
 
-สร้างไฟล์ `src/store/taskStore.ts` พร้อม state และ actions:
+สร้างไฟล์ `app/store/taskStore.ts` พร้อม state และ actions:
 
 **State:**
 - `tasks: Task[]` - array ของ tasks
@@ -85,10 +85,10 @@ export interface Task {
 
 ### 4.1 ตั้งค่า Router (10 คะแนน)
 
-แก้ไขไฟล์ `src/main.tsx`:
+แก้ไขไฟล์ `app/main.tsx`:
 - Wrap `<App />` ด้วย `<BrowserRouter>`
 
-แก้ไขไฟล์ `src/components/App.tsx`:
+แก้ไขไฟล์ `app/components/App.tsx`:
 - Import และใช้ `Routes`, `Route` จาก react-router-dom
 - สร้าง routes:
   - `/` → `<Dashboard />`
@@ -106,7 +106,7 @@ export interface Task {
 
 ### 5.1 เชื่อมต่อกับ Store (10 คะแนน)
 
-แก้ไขไฟล์ `src/components/Dashboard.tsx`:
+แก้ไขไฟล์ `app/components/Dashboard.tsx`:
 
 1. **Import และใช้ store:**
    ```typescript
@@ -130,7 +130,7 @@ export interface Task {
 
 ### 6.1 เชื่อมต่อกับ Store (10 คะแนน)
 
-แก้ไขไฟล์ `src/components/Tasks.tsx`:
+แก้ไขไฟล์ `app/components/Tasks.tsx`:
 
 1. **Import และใช้ store:**
    ```typescript

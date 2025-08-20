@@ -8,7 +8,7 @@
 สร้างแอพพลิเคชัน Task Management Dashboard โดยใช้ React, MUI, React Router, Zustand และ React Hook Form
 
 เราได้เตรียมไฟล์ layout และ CSS ให้แล้วในโฟลเดอร์ `/app/components/`:
-- `App.tsx` - Layout หลักพร้อม Navigation
+- `AppLayout.tsx` - Layout หลักพร้อม Navigation
 - `Dashboard.tsx` - หน้า Dashboard 
 - `Tasks.tsx` - หน้า Tasks
 

@@ -86,7 +86,7 @@ export interface Task {
 ในไฟล์ `App.tsx`:
 - Import `useNavigate` 
 - ใช้ `navigate(item.path)` ใน `onClick` ของ menu items (ดูข้อมูลเพิ่มเติมใน `routes.ts`)
-- ใช้ <Outlet/> ในจุดที่เหมาะสม
+- ใช้ `<Outlet/>` ในจุดที่เหมาะสม
 
 ---
 

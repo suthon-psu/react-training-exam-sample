@@ -83,22 +83,10 @@ export interface Task {
 
 ## ส่วนที่ 4: React Router (15 คะแนน)
 
-### 4.1 ตั้งค่า Router (10 คะแนน)
-
-แก้ไขไฟล์ `app/main.tsx`:
-- Wrap `<App />` ด้วย `<BrowserRouter>`
-
-แก้ไขไฟล์ `app/components/App.tsx`:
-- Import และใช้ `Routes`, `Route` จาก react-router-dom
-- สร้าง routes:
-  - `/` → `<Dashboard />`
-  - `/tasks` → `<Tasks />`
-
-### 4.2 Navigation (5 คะแนน)
-
 ในไฟล์ `App.tsx`:
 - Import `useNavigate` 
-- ใช้ `navigate(item.path)` ใน `onClick` ของ menu items
+- ใช้ `navigate(item.path)` ใน `onClick` ของ menu items (ดูข้อมูลเพิ่มเติมใน `routes.ts`)
+- ใช้ <Outlet/> ในจุดที่เหมาะสม
 
 ---
 

@@ -29,7 +29,8 @@ npm install zustand react-hook-form
 ```
 app/
 ├── components/
-│   ├── App.tsx (ให้แล้ว)
+│   ├── AppLayout.tsx (ให้แล้ว)
+├── routes/
 │   ├── Dashboard.tsx (ให้แล้ว)
 │   └── Tasks.tsx (ให้แล้ว)
 ├── store/
